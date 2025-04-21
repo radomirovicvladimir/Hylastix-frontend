@@ -1,0 +1,24 @@
+<h2> Item List</h2>
+<table class = "table table-striped">
+    <thead>
+        <tr>
+            <th> Item Name</th>
+            <th> Best Before </th>
+            <th> Quantity</th>
+            <th> Time Stored </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let item of items" >
+            <td> {{ item.itemName }} </td>
+            <td> {{ item.bestBefore }} </td>
+            <td> {{ item.quantity }}</td>
+            <td> {{ item.timeStored }} </td>
+            <td>
+                <button (click) = "updateItem(item.id)" class = "btn btn-info"> Update</button>
+                <button (click) = "deleteItem(item.id)" class = "btn btn-danger" style="margin-left: 10px"> Delete</button>
+                <button (click) = "itemDetails(item.id)" class = "btn btn-info" style="margin-left: 10px"> View</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

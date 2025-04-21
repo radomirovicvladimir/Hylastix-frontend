@@ -1,0 +1,27 @@
+<div class="col-md-6 offset-md-3">
+    <h3> Create Item </h3>
+    <form (ngSubmit) = "onSubmit()">
+    
+        <div class="form-group">
+            <label> Item Name</label>
+            <input type="text" class ="form-control" id = "itemName"
+                [(ngModel)] = "item.itemName" name = "itemName">
+        </div>
+    
+        <div class="form-group">
+            <label> Best Before</label>
+            <p>input in yyyy-mm-dd form</p>
+            <input type="text" class ="form-control" id = "bestBefore"
+                [(ngModel)] = "item.bestBefore" name = "bestBefore">
+        </div>
+    
+        <div class="form-group">
+            <label> Quantity</label>
+            <input type="text" class ="form-control" id = "quantity"
+                [(ngModel)] = "item.quantity" name = "quantity">
+        </div>
+    
+        <button class = "btn btn-success" type ="submit">Submit</button>
+    
+    </form>
+    </div> 
