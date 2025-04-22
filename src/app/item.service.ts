@@ -12,9 +12,10 @@ export class ItemService {
 
   constructor(private httpClient: HttpClient) { }
   
-  getItemsList(): Observable<Item[]>{
-    return this.httpClient.get<Item[]>(`${this.baseURL}`);
-  }
+  getItemsList(page: number = 0, size: number = 10, sortBy: string = 'timeStored', sortDirection: string = 'desc'): Observable<any> {
+    const url = `${this.baseURL}?page=${page}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}`;
+    return this.httpClient.get<any>(url);
+  }  
 
   createItem(item: Item): Observable<Object>{
     return this.httpClient.post(`${this.baseURL}`, item);

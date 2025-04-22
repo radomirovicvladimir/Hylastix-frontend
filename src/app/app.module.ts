@@ -9,6 +9,7 @@ import { FormsModule} from '@angular/forms';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
