@@ -1,25 +1,26 @@
 
+<div class="row mb-3">
+  <div class="col-md-4">
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search by item name" class="form-control" />
+  </div>
+</div>
+
 <table class="table table-striped">
-    <thead>
-        <tr>
-          <th (click)="sort('itemName')" style="cursor: pointer">
-            Item Name {{ getSortIcon('itemName') }}
-          </th>
-          <th (click)="sort('bestBefore')" style="cursor: pointer">
-            Best Before {{ getSortIcon('bestBefore') }}
-          </th>
-          <th (click)="sort('quantity')" style="cursor: pointer">
-            Quantity {{ getSortIcon('quantity') }}
-          </th>
-          <th (click)="sort('timeStored')" style="cursor: pointer">
-            Time Stored {{ getSortIcon('timeStored') }}
-          </th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      
+  <thead>
+    <tr>
+      <th (click)="sort('itemName')" style="cursor: pointer">Item Name {{ getSortIcon('itemName') }}</th>
+      <th (click)="sort('bestBefore')" style="cursor: pointer">Best Before {{ getSortIcon('bestBefore') }}</th>
+      <th (click)="sort('quantity')" style="cursor: pointer">Quantity {{ getSortIcon('quantity') }}</th>
+      <th (click)="sort('timeStored')" style="cursor: pointer">Time Stored {{ getSortIcon('timeStored') }}</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
   <tbody>
-    <tr *ngFor="let item of items">
+    <tr *ngFor="let item of items"
+        [ngClass]="{
+          'table-danger': isExpired(item),
+          'table-warning': !isExpired(item) && expiresToday(item)
+        }">
       <td>{{ item.itemName }}</td>
       <td>{{ item.bestBefore }}</td>
       <td>{{ item.quantity }}</td>
@@ -30,10 +31,9 @@
         <button (click)="itemDetails(item.id)" class="btn btn-info" style="margin-left: 10px">View</button>
       </td>
     </tr>
-  </tbody>
+  </tbody>  
 </table>
 
-<!-- Pagination -->
 <nav *ngIf="totalItems > pageSize">
   <ngb-pagination
     [collectionSize]="totalItems"
@@ -44,4 +44,3 @@
     (pageChange)="onPageChange($event)">
   </ngb-pagination>
 </nav>
-

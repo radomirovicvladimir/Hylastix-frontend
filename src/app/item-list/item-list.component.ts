@@ -13,8 +13,9 @@ export class ItemListComponent implements OnInit {
   items: Item[] = [];
   totalItems: number = 0;
   totalPages: number = 0;
-  currentPage: number = 1; // NgbPagination is 1-based
+  currentPage: number = 1;
   pageSize: number = 10;
+  searchTerm: string = '';
 
   sortBy: string = 'timeStored';
   sortDirection: string = 'desc';
@@ -26,13 +27,22 @@ export class ItemListComponent implements OnInit {
   }
 
   getItems() {
-    // Backend is 0-based, so subtract 1
-    this.itemService.getItemsList(this.currentPage - 1, this.pageSize, this.sortBy, this.sortDirection)
-      .subscribe(data => {
-        this.items = data.content;
-        this.totalItems = data.totalElements;
-        this.totalPages = data.totalPages;
-      });
+    this.itemService.getItemsList(
+      this.currentPage - 1,
+      this.pageSize,
+      this.sortBy,
+      this.sortDirection,
+      this.searchTerm
+    ).subscribe(data => {
+      this.items = data.content;
+      this.totalItems = data.totalElements;
+      this.totalPages = data.totalPages;
+    });
+  }
+  
+  onSearchChange() {
+    this.currentPage = 1;
+    this.getItems();
   }
 
   onPageChange(page: number) {
@@ -68,4 +78,22 @@ export class ItemListComponent implements OnInit {
     }
     return '';
   }
+
+  isExpired(item: Item): boolean {
+    const today = new Date();
+    const bestBefore = new Date(item.bestBefore);
+    return this.stripTime(bestBefore) < this.stripTime(today);
+  }
+  
+  expiresToday(item: Item): boolean {
+    const today = new Date();
+    const bestBefore = new Date(item.bestBefore);
+    return this.stripTime(bestBefore).getTime() === this.stripTime(today).getTime();
+  }
+  
+  stripTime(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+  
+  
 }
