@@ -10,6 +10,9 @@ import { UpdateItemComponent } from './update-item/update-item.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './login/login.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ItemListComponent,
     CreateItemComponent,
     UpdateItemComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
